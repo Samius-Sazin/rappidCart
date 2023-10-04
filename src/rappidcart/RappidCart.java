@@ -1,3 +1,15 @@
+/*
+    ********** rappidCart **********
+            Name : Samius Sazin
+            ID: 0242220005101236
+            Batch_63
+            Department of C.S.E
+            Daffodil International University
+            
+            Start on    : September 27, 2023
+            Complete on : 
+*/
+
 package rappidcart;
 
 public class RappidCart {
