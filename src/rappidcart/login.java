@@ -4,8 +4,6 @@ import javax.swing.JFrame;
 import pop_up.successfull_window;
 import pop_up.unsuccessfull_window;
 
-import seller.*;
-import client.*;
 
 public class login extends javax.swing.JFrame {
 
