@@ -268,11 +268,24 @@ public class newPassword_reset extends javax.swing.JFrame {
     }//GEN-LAST:event_newpas_ActionPerformed
 
     private void retypeNewPass_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retypeNewPass_ActionPerformed
-        retypeNewPass = retypeNewPass_.getText();
-        if(newpas.compareTo(retypeNewPass) != 0){
-            new unsuccessfull_window().control_unsuccessful_popUp_window_retypeNewPass();
-            newpas_.setText("");
-            retypeNewPass_.setText("");
+        if(retypeNewPass_.getText().length() < 4){
+            new unsuccessfull_window().control_Unsuccessful_popUp_window_signUp_week_password();
+        } 
+        else{
+            if(newpas_.getText().isEmpty()){
+                newpas_.setText(retypeNewPass_.getText());
+                newpas = newpas_.getText();
+                retypeNewPass_.setText("");
+            }
+            else{
+                retypeNewPass = retypeNewPass_.getText();
+
+                if(newpas.compareTo(retypeNewPass) != 0){
+                    new unsuccessfull_window().control_unsuccessful_popUp_window_retypeNewPass();
+                    newpas_.setText("");
+                    retypeNewPass_.setText("");
+                }
+            }
         }
     }//GEN-LAST:event_retypeNewPass_ActionPerformed
 
