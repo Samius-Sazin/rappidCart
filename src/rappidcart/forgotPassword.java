@@ -355,10 +355,15 @@ public class forgotPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_year_ActionPerformed
 
     private void month_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_month_ActionPerformed
-        month = Integer.parseInt(month_.getText());
-        if(month > 12 || month <= 0){
+        if(!month_.getText().isEmpty()){
+            month = Integer.parseInt(month_.getText());
+            if(month > 12 || month <= 0){
+                new unsuccessfull_window().control_unsuccessful_popUp_window_month_day();
+                month_.setText("");
+            }
+        }
+        else{
             new unsuccessfull_window().control_unsuccessful_popUp_window_month_day();
-            month_.setText("");
         }
     }//GEN-LAST:event_month_ActionPerformed
 
@@ -428,10 +433,15 @@ public class forgotPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_cancel_ActionPerformed
 
     private void day_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_day_ActionPerformed
-        day = Integer.parseInt(day_.getText());
-        if(day > 31 || day <= 0){
+        if(!day_.getText().isEmpty()){
+            day = Integer.parseInt(day_.getText());
+            if(day > 31 || day <= 0){
+                new unsuccessfull_window().control_unsuccessful_popUp_window_month_day();
+                day_.setText("");
+            }
+        }
+        else{
             new unsuccessfull_window().control_unsuccessful_popUp_window_month_day();
-            day_.setText("");
         }
     }//GEN-LAST:event_day_ActionPerformed
 

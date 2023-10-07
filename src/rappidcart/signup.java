@@ -7,10 +7,10 @@ public class signup extends javax.swing.JFrame {
     
     String first_name;
     String last_name;
-    String user_name;
+    String user_name = "";
     int day, month, year;
-    String gmail;
-    String password;
+    String gmail = "";
+    String password = "";
 
     public signup() {
         initComponents();
@@ -425,7 +425,7 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_the_ultimate_solutionActionPerformed
 
     private void proceed_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proceed_ActionPerformed
-        if(firstName_.getText().isEmpty() || lastName_.getText().isEmpty() || year_.getText().isEmpty() || userName_.getText().isEmpty() || gmail_.getText().isEmpty() || password_.getText().isEmpty() || (!seller_.isSelected() && !client_.isSelected())){
+        if(firstName_.getText().isEmpty() || lastName_.getText().isEmpty() || year_.getText().isEmpty() || user_name.isEmpty() || gmail.isEmpty() || password.isEmpty() || (!seller_.isSelected() && !client_.isSelected())){
             new unsuccessfull_window().control_unsuccessful_popUp_window_proceed();
         }
         
@@ -516,9 +516,11 @@ public class signup extends javax.swing.JFrame {
     }//GEN-LAST:event_client_ActionPerformed
 
     private void password_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_password_ActionPerformed
-        password = password_.getText();
-        if(password.length() < 4){
+        if(password_.getText().length() < 4){
             new unsuccessfull_window().control_Unsuccessful_popUp_window_signUp_week_password();
+        }
+        else {
+            password = password_.getText();
         }
     }//GEN-LAST:event_password_ActionPerformed
 
@@ -531,8 +533,9 @@ public class signup extends javax.swing.JFrame {
         if(gmail_.getText().contains("@") == false || gmail_.getText().contains(".") == false){
             new unsuccessfull_window().signUp_check_valid_gmail_password("Please insert valid gmail");
         }
-        
-        gmail = gmail_.getText();
+        else{
+            gmail = gmail_.getText();
+        }
     }//GEN-LAST:event_gmail_ActionPerformed
 
     private void month_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_month_ActionPerformed
@@ -548,7 +551,9 @@ public class signup extends javax.swing.JFrame {
             new unsuccessfull_window().control_unsuccessful_popUp_window_year();
             year_.setText("");
         }
-        year = Integer.parseInt(year_.getText());
+        else{
+            year = Integer.parseInt(year_.getText());
+        }
     }//GEN-LAST:event_year_ActionPerformed
 
     
