@@ -50,18 +50,25 @@ public class seller_dash_board extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jButton1.setBackground(new java.awt.Color(240, 85, 35));
         jButton1.setText("Profile");
 
+        jButton3.setBackground(new java.awt.Color(240, 85, 35));
         jButton3.setText("Dashboard");
 
+        jButton4.setBackground(new java.awt.Color(240, 85, 35));
         jButton4.setText("Orders & Reviews");
 
+        jButton5.setBackground(new java.awt.Color(240, 85, 35));
         jButton5.setText("Products");
 
+        jButton7.setBackground(new java.awt.Color(240, 85, 35));
         jButton7.setText("Helpline");
 
+        jButton8.setBackground(new java.awt.Color(240, 85, 35));
         jButton8.setText("Check log");
 
+        jButton9.setBackground(new java.awt.Color(240, 85, 35));
         jButton9.setText("Accounts & Settings");
         jButton9.setPreferredSize(new java.awt.Dimension(140, 23));
 
@@ -72,13 +79,13 @@ public class seller_dash_board extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Products.png"))); // NOI18N
 
-        jLabel5.setText("jLabel2");
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/accounts_and_settings.png"))); // NOI18N
 
-        jLabel6.setText("jLabel2");
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/orders_and_review.png"))); // NOI18N
 
-        jLabel7.setText("jLabel2");
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cheaker_log.png"))); // NOI18N
 
-        jLabel8.setText("jLabel2");
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/helpline.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
