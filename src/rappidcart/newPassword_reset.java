@@ -272,12 +272,14 @@ public class newPassword_reset extends javax.swing.JFrame {
             new unsuccessfull_window().control_Unsuccessful_popUp_window_signUp_week_password();
         } 
         else{
+            int count = -1;
             if(newpas_.getText().isEmpty()){
                 newpas_.setText(retypeNewPass_.getText());
                 newpas = newpas_.getText();
                 retypeNewPass_.setText("");
+                count = 1;
             }
-            else{
+            if(!newpas_.getText().isEmpty() && count != 1){
                 retypeNewPass = retypeNewPass_.getText();
 
                 if(newpas.compareTo(retypeNewPass) != 0){
