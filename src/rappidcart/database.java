@@ -22,13 +22,13 @@ public class database {
             //set Data to database for seller
             if(seller){
                 statement.execute("INSERT INTO `rappid_cart`.`login_signup_seller` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
-                statement.execute("INSERT INTO `rappid_cart`.`seller_dashboard` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                statement.execute("INSERT INTO `rappid_cart`.`seller_profile` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
             }
             
             //set Data to database for Client
             else if(client){
                 statement.execute("INSERT INTO `rappid_cart`.`login_signup_client` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
-                //statement.execute("INSERT INTO `rappid_cart`.`seller_dashboard` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                //statement.execute("INSERT INTO `rappid_cart`.`client_profile` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
             }
         }
         catch (Exception e){

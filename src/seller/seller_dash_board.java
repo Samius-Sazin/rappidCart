@@ -36,7 +36,7 @@ public class seller_dash_board extends javax.swing.JFrame {
         try{
             Statement statement = connection.createStatement();
             
-            read_result = statement.executeQuery("SELECT * FROM rappid_cart.seller_dashboard;");
+            read_result = statement.executeQuery("SELECT * FROM rappid_cart.seller_profile;");
             
             while (read_result.next()) {
                 if(read_result.getString("user_name").compareTo(userNameGmail)==0 || read_result.getString("gmail").compareTo(userNameGmail)==0){
