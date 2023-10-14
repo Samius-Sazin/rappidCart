@@ -434,11 +434,15 @@ public class signup extends javax.swing.JFrame {
             int check_userNameGmail = db.check_userNameGmail(user_name, gmail, seller_.isSelected(), client_.isSelected());
             
             //Passing data too database
-            if(check_userNameGmail >= 0){
+            if(check_userNameGmail > 0){
                 int serialNumber = check_userNameGmail;
                 
+                //set data to seller/client table
                 db.set_data_to_database_from_signUpPage(serialNumber, first_name, last_name, user_name, day, month, year, gmail, password, seller_.isSelected(), client_.isSelected());
-
+                
+                //copy seller/client table data to seller/client dashboard table
+                //db.copy_table_from_signup_to_dashboard(user_name, seller_.isSelected(), client_.isSelected());
+                
                 new successfull_window(this).control_successful_popUp_window_signUp();
             }
             

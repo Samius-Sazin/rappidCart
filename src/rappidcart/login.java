@@ -8,7 +8,7 @@ import pop_up.unsuccessfull_window;
 public class login extends javax.swing.JFrame {
 
     private String usernameOrGmail;
-    private String password;
+    private String password = "";
     JFrame homepage;
     
     public login() {
@@ -401,7 +401,7 @@ public class login extends javax.swing.JFrame {
                 }
             }
 
-            else{
+            else {
                 password_.setText("");
                 new unsuccessfull_window().control_Unsuccessful_popUp_window_login();
             }

@@ -1,5 +1,6 @@
 package rappidcart;
 
+//import javax.swing.JFrame;
 import java.sql.*;
 //import java.sql.DriverManager;
 //import java.sql.Connection;
@@ -11,7 +12,7 @@ import java.sql.*;
 public class database {
     
     //for sign up
-    public void set_data_to_database_from_signUpPage(int serialNumber, String first_name, String last_name, String user_name, int day, int month, int year, String gmail, String password, Boolean seller, Boolean client)
+    public void set_data_to_database_from_signUpPage(int serial_num, String first_name, String last_name, String user_name, int day, int month, int year, String gmail, String password, Boolean seller, Boolean client)
     {
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
@@ -20,12 +21,14 @@ public class database {
             
             //set Data to database for seller
             if(seller){
-                statement.execute("INSERT INTO `rappid_cart`.`login_signup_seller` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serialNumber+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                statement.execute("INSERT INTO `rappid_cart`.`login_signup_seller` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                statement.execute("INSERT INTO `rappid_cart`.`seller_dashboard` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
             }
             
             //set Data to database for Client
             else if(client){
-                statement.execute("INSERT INTO `rappid_cart`.`login_signup_client` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serialNumber+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                statement.execute("INSERT INTO `rappid_cart`.`login_signup_client` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                //statement.execute("INSERT INTO `rappid_cart`.`seller_dashboard` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
             }
         }
         catch (Exception e){
@@ -41,7 +44,7 @@ public class database {
             Statement statement = connection.createStatement();
             
             int ck_UName = 0;
-            int ck_Gmail = 0;  
+            int ck_Gmail = 0;
             int count = 1;
             
             ResultSet read_result = null;
@@ -104,25 +107,16 @@ public class database {
                 return false;
             }
             
-            Boolean check_username = false;
+            Boolean check_username_password = false;
             Boolean check_pass = false;
             
             while (read_result.next()) {
-                if(read_result.getString("user_name").compareTo(usernameOrGmail)==0 || read_result.getString("gmail").compareTo(usernameOrGmail)==0){
-                    check_username = true;
-                }
-                
-                if(read_result.getString("password").compareTo(password) == 0){
-                    check_pass = true;
+                if(read_result.getString("user_name").compareTo(usernameOrGmail)==0 || read_result.getString("gmail").compareTo(usernameOrGmail)==0 && read_result.getString("password").compareTo(password) == 0){
+                    return true;
                 }
             }
             
-            if(check_username && check_pass){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return false;
             
         }
         catch (Exception e){
@@ -297,5 +291,64 @@ public class database {
             e.printStackTrace();
         }
     }
+    
+//    ////this method show all info in seller dashboard cancelled
+//    public void show_necessary_info_to_seller_dashboard(String userNameGmail, JFrame seller_dashboard_frame){
+//        try{
+//            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+//
+//            Statement statement = connection.createStatement();
+//            
+//            ResultSet read_result = statement.executeQuery("SELECT * FROM rappid_cart.seller_dashboard;");
+//            
+//            while (read_result.next()) {
+//                if(read_result.getString("user_name").compareTo(userNameGmail)==0 || read_result.getString("gmail").compareTo(userNameGmail)==0){
+//                    seller_dashboard_frame.setVisible(false);
+//                    
+//                    
+//                    break;
+//                }
+//            }
+//            
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
+    
+//    //copy signup table data to dashboard table //cancelled
+//    public void copy_table_from_signup_to_dashboard(String userName, Boolean seller, Boolean client){
+//        try
+//        {
+//            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+//
+//            Statement statement = connection.createStatement();
+//            
+//            //data read
+//            ResultSet read_result = null;
+//            
+//            if(seller){
+//                read_result = statement.executeQuery("SELECT * FROM rappid_cart.login_signup_seller;");
+//            }
+//            else if(client){
+//                read_result = statement.executeQuery("SELECT * FROM rappid_cart.login_signup_client;");
+//            }
+//            
+//            while (read_result.next()) {
+//                if(read_result.getString("user_name").compareTo(userName) == 0){
+//                    if(seller){
+//                        statement.execute("INSERT INTO seller_dashboard (serial_number, first_name, last_name, user_name, day, month, year, gmail, password) SELECT serial_number, first_name, last_name, user_name, day, month, year, gmail, password FROM login_signup_seller;");
+//                    }
+//                    else if(client){
+//                        statement.execute("INSERT INTO client_dashboard (serial_number, first_name, last_name, user_name, day, month, year, gmail, password) SELECT serial_number, first_name, last_name, user_name, day, month, year, gmail, password FROM login_signup_client;");
+//                    }
+//                    
+//                    break;
+//                }
+//            }
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
     
 }
