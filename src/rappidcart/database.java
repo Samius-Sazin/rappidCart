@@ -292,7 +292,7 @@ public class database {
         }
     }
     
-//    ////this method show all info in seller dashboard cancelled
+//    //this method show all info in seller dashboard cancelled
 //    public void show_necessary_info_to_seller_dashboard(String userNameGmail, JFrame seller_dashboard_frame){
 //        try{
 //            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");

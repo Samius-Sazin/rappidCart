@@ -2,23 +2,53 @@ package seller;
 
 import rappidcart.database;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class seller_dash_board extends javax.swing.JFrame {
-    
+   
+    private Connection connection;
+    private ResultSet read_result;
     private String userNameGmail = "";
-    private ResultSet readResult;
 
     public seller_dash_board() {
         initComponents();
     }
     
+    // Constructor to establish the database connection
     public seller_dash_board(String userNameGmail) {
         initComponents();
         this.userNameGmail = userNameGmail;
         
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
         //this method show all info in seller dashboard
         show_necessary_info_in_seller_dashboard();
-        //new database().show_necessary_info_to_seller_dashboard(this.userNameGmail, this); cancelled
+    }
+    
+    //this method show all info in seller dashboard cancelled
+    private void show_necessary_info_in_seller_dashboard(){
+        try{
+            Statement statement = connection.createStatement();
+            
+            read_result = statement.executeQuery("SELECT * FROM rappid_cart.seller_dashboard;");
+            
+            while (read_result.next()) {
+                if(read_result.getString("user_name").compareTo(userNameGmail)==0 || read_result.getString("gmail").compareTo(userNameGmail)==0){
+                    setVisible(true);
+                    usersName_.setText(read_result.getString("first_name") + " " + read_result.getString("last_name"));
+                    break;
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -142,32 +172,62 @@ public class seller_dash_board extends javax.swing.JFrame {
         jButton3.setText("Dashboard");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(240, 85, 35));
         jButton5.setText("Products");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(240, 85, 35));
         jButton4.setText("Orders & Reviews");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton9.setBackground(new java.awt.Color(240, 85, 35));
         jButton9.setText("Accounts & Settings");
         jButton9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.setPreferredSize(new java.awt.Dimension(140, 23));
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jButton8.setBackground(new java.awt.Color(240, 85, 35));
         jButton8.setText("Check log");
         jButton8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton7.setBackground(new java.awt.Color(240, 85, 35));
         jButton7.setText("Helpline");
         jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/helpline.png"))); // NOI18N
 
@@ -309,29 +369,68 @@ public class seller_dash_board extends javax.swing.JFrame {
     }//GEN-LAST:event_closeProfgramButtono_ActionPerformed
 
     private void profile__ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile__ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_profile__ActionPerformed
-
-    private void show_necessary_info_in_seller_dashboard(){
-        try{
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
-
-            Statement statement = connection.createStatement();
+        try {
             
-            ResultSet read_result = statement.executeQuery("SELECT * FROM rappid_cart.seller_dashboard;");
-            
-            while (read_result.next()) {
-                if(read_result.getString("user_name").compareTo(userNameGmail)==0 || read_result.getString("gmail").compareTo(userNameGmail)==0){
-                    setVisible(true);
-                    usersName_.setText(read_result.getString("first_name") + " " + read_result.getString("last_name"));
-                    this.readResult = read_result;
-                    break;
-                }
-            }
-        } catch (Exception e){
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
-    }
+    }//GEN-LAST:event_profile__ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+            
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        try {
+            
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
+            
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        try {
+            
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     
     
 
