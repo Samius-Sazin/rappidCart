@@ -111,7 +111,7 @@ public class database {
             Boolean check_pass = false;
             
             while (read_result.next()) {
-                if(read_result.getString("user_name").compareTo(usernameOrGmail)==0 || read_result.getString("gmail").compareTo(usernameOrGmail)==0 && read_result.getString("password").compareTo(password) == 0){
+                if((read_result.getString("user_name").compareTo(usernameOrGmail)==0 || read_result.getString("gmail").compareTo(usernameOrGmail)==0) && read_result.getString("password").compareTo(password) == 0){
                     return true;
                 }
             }
