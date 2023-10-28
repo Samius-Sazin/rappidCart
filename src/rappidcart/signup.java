@@ -1,5 +1,8 @@
 package rappidcart;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import pop_up.successfull_window;
 import pop_up.unsuccessfull_window;
 
@@ -439,9 +442,6 @@ public class signup extends javax.swing.JFrame {
                 
                 //set data to seller/client table
                 db.set_data_to_database_from_signUpPage(serialNumber, first_name, last_name, user_name, day, month, year, gmail, password, seller_.isSelected(), client_.isSelected());
-                
-                //copy seller/client table data to seller/client dashboard table
-                //db.copy_table_from_signup_to_dashboard(user_name, seller_.isSelected(), client_.isSelected());
                 
                 new successfull_window(this).control_successful_popUp_window_signUp();
             }

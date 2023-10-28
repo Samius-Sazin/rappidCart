@@ -14,6 +14,7 @@ public class successfull_window extends javax.swing.JFrame {
     private JFrame parentFrame;
     private Boolean seller, client;
     private String userNameGmail;
+    private Boolean update_seller_proile_check = false;
     
     public successfull_window() {
         initComponents(); 
@@ -186,6 +187,14 @@ public class successfull_window extends javax.swing.JFrame {
             
             new login().setVisible(true);
         }
+        
+        if(update_seller_proile_check){
+            setVisible(false);
+            dispose();
+            parentFrame.setVisible(false);
+            dispose();
+            new login().setVisible(true);
+        }
     }//GEN-LAST:event_continuue_ActionPerformed
 
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -229,8 +238,21 @@ public class successfull_window extends javax.swing.JFrame {
             alert_box_.setText("");
             dispose();
         }
+        
+        if(update_seller_proile_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
     
+    
+    
+    
+    public void update_seller_client_profile(String show){
+        update_seller_proile_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
     
     
     //called from newPassword_reset class & control the pop up successful_window for proceed

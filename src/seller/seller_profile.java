@@ -2,20 +2,48 @@ package seller;
 
 import java.sql.*;
 import javax.swing.*;
+import pop_up.successfull_window;
 import rappidcart.login;
+import pop_up.*;
 
 public class seller_profile extends javax.swing.JFrame {
 
     private ResultSet read_result;
-    private JFrame seller_dash_board_frameJFrame;
+    private JFrame seller_dash_board_frame;
     
-    public seller_profile(JFrame seller_dash_board_frameJFrame, ResultSet read_result) {
+    private String firstName = "";
+    private String lastName = "";
+    private String userName = "";
+    private String gmail = "";
+    private int day = 0, month = 0, year = 0;
+    private String country = "";
+    private String city = "";
+    private String address = "";
+    private String bankAccName = "";
+    private int bankAccNumb = 0;
+    
+    
+    public seller_profile(JFrame seller_dash_board_frame, ResultSet read_result) {
         initComponents();
         setVisible(true);
         this.read_result = read_result;
-        this.seller_dash_board_frameJFrame = seller_dash_board_frameJFrame;
+        this.seller_dash_board_frame = seller_dash_board_frame;
         
         try {
+            firstName = this.read_result.getString("first_name");
+            lastName = this.read_result.getString("last_name");
+            userName = this.read_result.getString("user_name");
+            gmail = this.read_result.getString("gmail");
+            day = this.read_result.getInt("day");
+            month = this.read_result.getInt("month");
+            year = this.read_result.getInt("year");
+            country = this.read_result.getString("country");
+            city = this.read_result.getString("city");
+            address = this.read_result.getString("address");
+            bankAccName = this.read_result.getString("bank_acc_name");
+            bankAccNumb = this.read_result.getInt("bank_acc_numb");
+            
+            
             if(this.read_result.getString("country").isEmpty() || this.read_result.getString("city").isEmpty() || this.read_result.getString("address").isEmpty() || this.read_result.getString("bank_acc_name").isEmpty() || (this.read_result.getInt("bank_acc_numb") == 0)){
                 showVarifyStatus_.setText("Account is not varified");
             }
@@ -35,7 +63,7 @@ public class seller_profile extends javax.swing.JFrame {
             address_.setText(this.read_result.getString("address"));
             bankAccoutName_.setText(this.read_result.getString("bank_acc_name"));
             if(this.read_result.getInt("bank_acc_numb") != 0){
-                bankAccoutNumber_.setText("" + this.read_result.getInt("bank_acc_numb"));
+                bankAccoutNumb_.setText("" + this.read_result.getInt("bank_acc_numb"));
             }
         }
         catch (Exception e){
@@ -74,7 +102,7 @@ public class seller_profile extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         day_ = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        bankAccoutNumber_ = new javax.swing.JTextField();
+        bankAccoutNumb_ = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         user_name_ = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
@@ -285,11 +313,11 @@ public class seller_profile extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Gmail");
 
-        bankAccoutNumber_.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        bankAccoutNumber_.setBorder(null);
-        bankAccoutNumber_.addActionListener(new java.awt.event.ActionListener() {
+        bankAccoutNumb_.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        bankAccoutNumb_.setBorder(null);
+        bankAccoutNumb_.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bankAccoutNumber_ActionPerformed(evt);
+                bankAccoutNumb_ActionPerformed(evt);
             }
         });
 
@@ -397,7 +425,7 @@ public class seller_profile extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bankAccoutName_, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(bankAccoutNumber_, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bankAccoutNumb_, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(city_, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(country_, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -497,7 +525,7 @@ public class seller_profile extends javax.swing.JFrame {
                     .addComponent(jLabel18))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bankAccoutNumber_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bankAccoutNumb_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
                 .addGap(14, 14, 14))
         );
@@ -572,12 +600,7 @@ public class seller_profile extends javax.swing.JFrame {
     }//GEN-LAST:event_closeProfgramButtono_ActionPerformed
 
     private void first_name_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_first_name_ActionPerformed
-        try {
-            
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        
     }//GEN-LAST:event_first_name_ActionPerformed
 
     private void last_name_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_last_name_ActionPerformed
@@ -605,24 +628,47 @@ public class seller_profile extends javax.swing.JFrame {
     }//GEN-LAST:event_year_ActionPerformed
 
     private void saveEdit_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEdit_ActionPerformed
+        String countryValue = country_.getSelectedItem().toString();
+        String cityValue = city_.getSelectedItem().toString();
         
+        if(first_name_.getText().compareTo(firstName)==0 && last_name_.getText().compareTo(lastName)==0 && user_name_.getText().compareTo(userName)==0 && gmail_.getText().compareTo(gmail)==0 && Integer.parseInt(day_.getText()) == day && Integer.parseInt(month_.getText()) == month && Integer.parseInt(year_.getText()) == year && countryValue.compareTo(country)==0 && cityValue.compareTo(firstName)==0 && address_.getText().compareTo(address)==0 && bankAccoutName_.getText().compareTo(bankAccName)==0 && Integer.parseInt(bankAccoutNumb_.getText()) == bankAccNumb){
+            
+        }
+        else{
+            try{
+                int serial_num = Integer.parseInt(read_result.getString("serial_number"));
+                String user_name = read_result.getString("user_name");
+                String gmail = read_result.getString("gmail");
+        
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+
+                Statement statement = connection.createStatement();
+
+                statement.execute("UPDATE `rappid_cart`.`seller_profile` SET `first_name` = '"+first_name_.getText()+"', `last_name` = '"+last_name_.getText()+"', `user_name` = '"+user_name_.getText()+"', `day` = '"+Integer.parseInt(day_.getText())+"', `month` = '"+Integer.parseInt(month_.getText())+"', `year` = '"+Integer.parseInt(year_.getText())+"', `gmail` = '"+gmail_.getText()+"', `country` = '"+countryValue+"', `city` = '"+cityValue+"', `address` = '"+address_.getText()+"', `bank_acc_name` = '"+bankAccoutName_.getText()+"', `bank_acc_numb` = '"+Integer.parseInt(bankAccoutNumb_.getText())+"' WHERE (`serial_number` = '"+serial_num+"') and (`user_name` = '"+user_name+"') and (`gmail` = '"+gmail+"');");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        seller_dash_board_frame.setVisible(false);
+        new successfull_window(this).update_seller_client_profile("Successful! Please login again");
     }//GEN-LAST:event_saveEdit_ActionPerformed
 
     private void country_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_country_ActionPerformed
-        String countryValue = country_.getSelectedItem().toString();
+        
     }//GEN-LAST:event_country_ActionPerformed
 
     private void city_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_city_ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_city_ActionPerformed
 
     private void bankAccoutName_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bankAccoutName_ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bankAccoutName_ActionPerformed
 
-    private void bankAccoutNumber_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bankAccoutNumber_ActionPerformed
+    private void bankAccoutNumb_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bankAccoutNumb_ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bankAccoutNumber_ActionPerformed
+    }//GEN-LAST:event_bankAccoutNumb_ActionPerformed
 
     private void cancel_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_ActionPerformed
         try{
@@ -639,19 +685,19 @@ public class seller_profile extends javax.swing.JFrame {
             address_.setText(read_result.getString("address"));
             bankAccoutName_.setText(read_result.getString("bank_acc_name"));
             if(read_result.getInt("bank_acc_numb") != 0){
-                bankAccoutNumber_.setText("" + read_result.getInt("bank_acc_numb"));
+                bankAccoutNumb_.setText("" + read_result.getInt("bank_acc_numb"));
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        
+        new unsuccessfull_window().cancel_update_seller_client_profile("Cancellation successful!");
     }//GEN-LAST:event_cancel_ActionPerformed
 
     private void closeProfgramButtono_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeProfgramButtono_2ActionPerformed
         setVisible(false);
         dispose();
-        seller_dash_board_frameJFrame.setVisible(true);
+        seller_dash_board_frame.setVisible(true);
     }//GEN-LAST:event_closeProfgramButtono_2ActionPerformed
 
     private void saveEdit_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEdit_1ActionPerformed
@@ -667,7 +713,7 @@ public class seller_profile extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea address_;
     private javax.swing.JTextField bankAccoutName_;
-    private javax.swing.JTextField bankAccoutNumber_;
+    private javax.swing.JTextField bankAccoutNumb_;
     private javax.swing.JButton cancel_;
     private javax.swing.JComboBox<String> city_;
     private javax.swing.JButton closeProfgramButtono_;

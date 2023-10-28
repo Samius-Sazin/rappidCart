@@ -16,6 +16,7 @@ public class unsuccessfull_window extends javax.swing.JFrame {
     Boolean signUp_similar_UName_GMAIL_check = false;
     Boolean valid_gmail_password_check = false;
     Boolean signUp_week_password_check = false;
+    Boolean update_seller_profile_check = false;
     
     public JFrame parentFrame;
     
@@ -243,6 +244,11 @@ public class unsuccessfull_window extends javax.swing.JFrame {
             setVisible(false);
             dispose();
         }
+        
+        if(update_seller_profile_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_continue_ActionPerformed
  
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -323,8 +329,22 @@ public class unsuccessfull_window extends javax.swing.JFrame {
             setVisible(false);
             dispose();
         }
+        
+        if(update_seller_profile_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
 
+    
+    //called from seller package, seller_profile class
+    public void cancel_update_seller_client_profile(String show){
+        update_seller_profile_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
+    
+    
     //called from signUp & control the pop up unsuccessful_window for check valid/invalid gmail
     //also works for seller/client checkBox check
     //also work (check if any seller/client box is selected or not while inserting uername in log in page)
