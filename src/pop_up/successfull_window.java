@@ -15,6 +15,8 @@ public class successfull_window extends javax.swing.JFrame {
     private Boolean seller, client;
     private String userNameGmail;
     private Boolean update_seller_proile_check = false;
+    private Boolean add_product_check = false;
+    private JFrame seller_dash_board_frame;
     
     public successfull_window() {
         initComponents(); 
@@ -195,6 +197,15 @@ public class successfull_window extends javax.swing.JFrame {
             dispose();
             new login().setVisible(true);
         }
+        
+        if(add_product_check){
+            setVisible(false);
+            dispose();
+            parentFrame.setVisible(false);
+            dispose();
+            
+            seller_dash_board_frame.setVisible(true);
+        }
     }//GEN-LAST:event_continuue_ActionPerformed
 
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -228,8 +239,6 @@ public class successfull_window extends javax.swing.JFrame {
             
             parentFrame.setVisible(false);
             parentFrame.dispose();
-            
-            
         }
         
         if(newPassword_reset_check == true){
@@ -243,11 +252,26 @@ public class successfull_window extends javax.swing.JFrame {
             setVisible(false);
             dispose();
         }
+        
+        if(add_product_check){
+            setVisible(false);
+            dispose();
+            parentFrame.setVisible(false);
+            dispose();
+            
+            seller_dash_board_frame.setVisible(true);
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
     
+    //call from seller_add_product calss
+    public void add_seller_product(String show, JFrame seller_dashboardFrame){
+        add_product_check = true;
+        seller_dash_board_frame = seller_dashboardFrame;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
     
-    
-    
+    //call from seller_profile class
     public void update_seller_client_profile(String show){
         update_seller_proile_check = true;
         alert_box_.setText(alert_box_.getText() + show);

@@ -7,7 +7,7 @@ import pop_up.*;
 public class seller_add_product extends javax.swing.JFrame {
     
     private ResultSet read_result;
-    JFrame seller_add_product_frame;
+    JFrame seller_dashBoard_frame;
 
     String product_name = "";
     String product_category = "";
@@ -23,11 +23,11 @@ public class seller_add_product extends javax.swing.JFrame {
         initComponents();
     }
     
-    public seller_add_product(JFrame seller_add_product_frame, ResultSet read_result) {
+    public seller_add_product(JFrame seller_dashBoard_frame, ResultSet read_result) {
         initComponents();
         
         this.read_result = read_result;
-        this.seller_add_product_frame = seller_add_product_frame;
+        this.seller_dashBoard_frame = seller_dashBoard_frame;
     }
 
 
@@ -281,21 +281,20 @@ public class seller_add_product extends javax.swing.JFrame {
                                     .addComponent(buying_price_, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jLabel21)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(for_whome_, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel16)
-                                                .addComponent(jLabel17)
-                                                .addComponent(jLabel14))
-                                            .addGap(8, 8, 8)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(brand_name_, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(category_, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel21)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(for_whome_, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel16)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel14))
+                                        .addGap(8, 8, 8)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(brand_name_, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(category_, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)))
                                     .addComponent(jLabel11)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
@@ -424,7 +423,7 @@ public class seller_add_product extends javax.swing.JFrame {
     private void closeProfgramButtono_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeProfgramButtono_2ActionPerformed
         setVisible(false);
         dispose();
-        seller_add_product_frame.setVisible(true);
+        seller_dashBoard_frame.setVisible(true);
     }//GEN-LAST:event_closeProfgramButtono_2ActionPerformed
 
     private void closeProfgramButtono_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeProfgramButtono_3ActionPerformed
@@ -446,18 +445,44 @@ public class seller_add_product extends javax.swing.JFrame {
     private void saveEdit_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEdit_ActionPerformed
         String category = category_.getSelectedItem().toString();
         String brandName = brand_name_.getSelectedItem().toString();
-        String forwhome = for_whome_.getSelectedItem().toString();
+        product_details = details_.getText();
+        
         try{
             String sellerUserName = read_result.getString("user_name");
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        
-        
-        
+            
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
 
-        seller_add_product_frame.setVisible(false);
-//        new successfull_window(this).update_seller_client_profile("Item added successfully!");
+            Statement statement = connection.createStatement();
+            
+            ResultSet read_result_addProduct = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+            
+            int Count = 1;
+            while(read_result_addProduct.next()){
+                Count++;
+            }
+            
+            String productID = setNullValue;
+            if(Count < 10){
+                productID = "0000000" + Count;
+            } else if(Count < 100){
+                productID = "000000" + Count;
+            } else if(Count < 1000){
+                productID = "00000" + Count;
+            } else if(Count < 10000){
+                productID = "0000" + Count;
+            } else if(Count < 100000){
+                productID = "000" + Count;
+            } else if(Count < 100000){
+                productID = "00" + Count;
+            }
+            
+            statement.execute("INSERT INTO `rappid_cart`.`seller_product` (`serial_number`, `user_name`, `product_id`, `product_name`, `category`, `brand_name`, `details`, `for_whome`, `buying_price`, `selling_price`, `ammounts`) VALUES ('"+Count+"', '"+sellerUserName+"', '"+productID+"', '"+product_name+"', '"+product_category+"', '"+product_brandName+"', '"+product_details+"', '"+product_forWhome+"', '"+product_buyPrice+"', '"+product_sellPrice+"', '"+product_ammount+"');");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }        
+
+        new successfull_window(this).add_seller_product("Item added successfully!", seller_dashBoard_frame);
     }//GEN-LAST:event_saveEdit_ActionPerformed
 
 

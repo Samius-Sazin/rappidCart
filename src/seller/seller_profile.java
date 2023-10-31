@@ -666,7 +666,7 @@ public class seller_profile extends javax.swing.JFrame {
                 e.printStackTrace();
             }
         }
-        seller_dash_board_frame.setVisible(false);
+
         new successfull_window(this).update_seller_client_profile("Successful! Please login again");
     }//GEN-LAST:event_saveEdit_ActionPerformed
 
