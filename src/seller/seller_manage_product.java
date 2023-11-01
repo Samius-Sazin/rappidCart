@@ -9,6 +9,7 @@ public class seller_manage_product extends javax.swing.JFrame {
 
     private ResultSet read_result_seller_dashBoard;
     private JFrame seller_dashBoard_frame;
+    String productID = "";
     
     private int Count = 0;
     private String product_id = "";
@@ -51,6 +52,7 @@ public class seller_manage_product extends javax.swing.JFrame {
             
             while(read_result_Product.next()){
                 if((read_result_seller_dashBoard.getString("user_name").compareTo(read_result_Product.getString("user_name")) == 0)){
+                    Count++;
                     
                     product_id = read_result_Product.getString("product_id");
                     product_name = read_result_Product.getString("product_name");
@@ -63,9 +65,8 @@ public class seller_manage_product extends javax.swing.JFrame {
                     product_ammount = read_result_Product.getInt("ammounts");
 
                     //show data on rtable from database
-                    table.addRow(new Object[]{product_id, product_name, product_category, product_brandName, product_details, product_forWhome, product_buyPrice, product_sellPrice, product_ammount});
+                    table.addRow(new Object[]{product_id, product_name, product_category, product_brandName, product_details, product_forWhome, product_buyPrice, product_sellPrice, product_ammount, Count});
 
-                    Count++;
                 }
             }
             
@@ -97,6 +98,9 @@ public class seller_manage_product extends javax.swing.JFrame {
         table_ = new javax.swing.JTable();
         cancel_ = new javax.swing.JButton();
         saveEdit_ = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        serial_number_ = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -232,14 +236,14 @@ public class seller_manage_product extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Product ID", "Name", "Category", "Brand Name", "Details", "Audiance", "Buying Price", "Selling Price", "Ammounts"
+                "Product ID", "Name", "Category", "Brand Name", "Details", "Audiance", "Buying Price", "Selling Price", "Ammounts", "#"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Short.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Short.class, java.lang.Short.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true
+                false, true, true, true, true, true, true, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -278,6 +282,35 @@ public class seller_manage_product extends javax.swing.JFrame {
             }
         });
 
+        jPanel3.setBackground(new java.awt.Color(240, 85, 35));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setText("Enter serial number to delete item :");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        serial_number_.setBackground(new java.awt.Color(240, 85, 35));
+        serial_number_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        serial_number_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        serial_number_.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        serial_number_.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serial_number_ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -287,7 +320,11 @@ public class seller_manage_product extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 768, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serial_number_, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancel_, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(saveEdit_, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -299,10 +336,13 @@ public class seller_manage_product extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancel_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveEdit_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cancel_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveEdit_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(serial_number_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 768, 480));
@@ -333,22 +373,25 @@ public class seller_manage_product extends javax.swing.JFrame {
             int r = 0;
             
             while(read_result_Product2.next()){
-                product_id = read_result_Product2.getString("product_id");
-                product_name = read_result_Product2.getString("product_name");
-                product_category = read_result_Product2.getString("category");
-                product_brandName = read_result_Product2.getString("brand_name");
-                product_details = read_result_Product2.getString("details");
-                product_forWhome = read_result_Product2.getString("for_whome");
-                product_buyPrice = read_result_Product2.getDouble("buying_price");
-                product_sellPrice = read_result_Product2.getDouble("selling_price");
-                product_ammount = read_result_Product2.getInt("ammounts");
-
-                Object[] databaseData = new Object[]{product_id, product_name, product_category, product_brandName, product_details, product_forWhome, product_buyPrice, product_sellPrice, product_ammount};
+                if((read_result_seller_dashBoard.getString("user_name").compareTo(read_result_Product2.getString("user_name")) == 0)){
                 
-                for (int c = 0; c < databaseData.length; c++) {
-                    table.setValueAt(databaseData[c], r, c);
+                    product_id = read_result_Product2.getString("product_id");
+                    product_name = read_result_Product2.getString("product_name");
+                    product_category = read_result_Product2.getString("category");
+                    product_brandName = read_result_Product2.getString("brand_name");
+                    product_details = read_result_Product2.getString("details");
+                    product_forWhome = read_result_Product2.getString("for_whome");
+                    product_buyPrice = read_result_Product2.getDouble("buying_price");
+                    product_sellPrice = read_result_Product2.getDouble("selling_price");
+                    product_ammount = read_result_Product2.getInt("ammounts");
+
+                    Object[] databaseData = new Object[]{product_id, product_name, product_category, product_brandName, product_details, product_forWhome, product_buyPrice, product_sellPrice, product_ammount};
+
+                    for (int c = 0; c < 9; c++) {
+                        table.setValueAt(databaseData[c], r, c);
+                    }
+                    r++;
                 }
-                r++;
             }
         }
         catch (Exception e){
@@ -359,42 +402,58 @@ public class seller_manage_product extends javax.swing.JFrame {
     }//GEN-LAST:event_cancel_ActionPerformed
 
     private void saveEdit_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveEdit_ActionPerformed
+        
         try{
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
 
             Statement statement = connection.createStatement();
             
-            DefaultTableModel table = (DefaultTableModel)table_.getModel();
-            
-            Object[] newData = new Object[9];
-
-            int r = 0, C = Count;
-            while(C-- > 0){
-                for (int c = 0; c < newData.length; c++) {
-                    newData[c] = table.getValueAt(r, c);
-                }
-                
-                product_id = "" + newData[0];
-                product_name = "" + newData[1];
-                product_category = "" + newData[2];
-                product_brandName = "" + newData[3];
-                product_details = "" + newData[4];
-                product_forWhome = "" + newData[5];
-                product_buyPrice = Double.parseDouble("" + newData[6]);
-                product_sellPrice = Double.parseDouble("" + newData[7]);
-                product_ammount = Integer.parseInt("" + newData[8]);
-                
-                statement.execute("UPDATE `rappid_cart`.`seller_product` SET `product_name` = '"+product_name+"', `category` = '"+product_category+"', `brand_name` = '"+product_brandName+"', `details` = '"+product_details+"', `for_whome` = '"+product_forWhome+"', `buying_price` = '"+product_buyPrice+"', `selling_price` = '"+product_sellPrice+"', `ammounts` = '"+product_ammount+"' WHERE (`product_id` = '"+product_id+"');");
-                
-                r++;
+            if(Integer.parseInt(serial_number_.getText()) > 0){System.out.println(productID);
+                statement.execute("DELETE FROM `rappid_cart`.`seller_product` WHERE (`product_id` = '"+productID+"');");
             }
+            
+            else{
+                DefaultTableModel table = (DefaultTableModel)table_.getModel();
+            
+                Object[] newData = new Object[9];
+
+                int r = 0, COUNT = Count;
+                while(COUNT-- > 0){
+                    for (int c = 0; c < 9; c++) {
+                        newData[c] = table.getValueAt(r, c);
+                    }
+
+                    product_id = "" + newData[0];
+                    product_name = "" + newData[1];
+                    product_category = "" + newData[2];
+                    product_brandName = "" + newData[3];
+                    product_details = "" + newData[4];
+                    product_forWhome = "" + newData[5];
+                    product_buyPrice = Double.parseDouble("" + newData[6]);
+                    product_sellPrice = Double.parseDouble("" + newData[7]);
+                    product_ammount = Integer.parseInt("" + newData[8]);
+
+                    statement.execute("UPDATE `rappid_cart`.`seller_product` SET `product_name` = '"+product_name+"', `category` = '"+product_category+"', `brand_name` = '"+product_brandName+"', `details` = '"+product_details+"', `for_whome` = '"+product_forWhome+"', `buying_price` = '"+product_buyPrice+"', `selling_price` = '"+product_sellPrice+"', `ammounts` = '"+product_ammount+"' WHERE (`product_id` = '"+product_id+"');");
+
+                    r++;
+                }
+            }
+            
         }
         catch (Exception e){
             e.printStackTrace();
-        } 
+        }
 
         new successfull_window(this).add_seller_product("Changes saved successfully!", seller_dashBoard_frame);
     }//GEN-LAST:event_saveEdit_ActionPerformed
+
+    private void serial_number_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serial_number_ActionPerformed
+        DefaultTableModel table = (DefaultTableModel) table_.getModel();
+        
+        productID = "" + table.getValueAt(Integer.parseInt(serial_number_.getText()) - 1, 0);
+        
+        table.removeRow(Integer.parseInt(serial_number_.getText()) - 1);
+    }//GEN-LAST:event_serial_number_ActionPerformed
 
 //    public static void main(String args[]) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
@@ -412,12 +471,15 @@ public class seller_manage_product extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton saveEdit_;
     private javax.swing.JLabel seller_name_;
     private javax.swing.JLabel seller_rating_;
+    private javax.swing.JTextField serial_number_;
     private javax.swing.JLabel showVarifyStatus_;
     private javax.swing.JTable table_;
     private javax.swing.JLabel total_products_;
