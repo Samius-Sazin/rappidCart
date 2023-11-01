@@ -436,7 +436,8 @@ public class seller_dash_board extends javax.swing.JFrame {
             setVisible(false);
         }
         else if(products_.getSelectedItem().toString().compareTo("Manage product") == 0){
-//            new seller_manage_product(read_result).setVisible(true);
+            new seller_manage_product(this, read_result).setVisible(true);
+            setVisible(false);
         }
     }//GEN-LAST:event_products_ActionPerformed
 

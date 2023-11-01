@@ -263,7 +263,7 @@ public class successfull_window extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cross_button_ActionPerformed
     
-    //call from seller_add_product calss
+    //call from seller_add_product calss, call from seller_manage_product class (save changes method)
     public void add_seller_product(String show, JFrame seller_dashboardFrame){
         add_product_check = true;
         seller_dash_board_frame = seller_dashboardFrame;

@@ -7,17 +7,17 @@ import pop_up.*;
 public class seller_add_product extends javax.swing.JFrame {
     
     private ResultSet read_result;
-    JFrame seller_dashBoard_frame;
+    private JFrame seller_dashBoard_frame;
 
-    String product_name = "";
-    String product_category = "";
-    String product_brandName = "";
-    String product_details = "";
-    String product_forWhome = "";
-    double product_buyPrice = 0.0;
-    double product_sellPrice = 0.0;
-    int product_ammount = 0;
-    String setNullValue = null;
+    private String product_name = "";
+    private String product_category = "";
+    private String product_brandName = "";
+    private String product_details = "";
+    private String product_forWhome = "";
+    private double product_buyPrice = 0.0;
+    private double product_sellPrice = 0.0;
+    private int product_ammount = 0;
+    private String setNullValue = null;
 
     public seller_add_product() {
         initComponents();
