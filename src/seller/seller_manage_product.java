@@ -408,7 +408,7 @@ public class seller_manage_product extends javax.swing.JFrame {
 
             Statement statement = connection.createStatement();
             
-            if(Integer.parseInt(serial_number_.getText()) > 0){System.out.println(productID);
+            if(serial_number_.getText().compareTo("")!=0 && Integer.parseInt(serial_number_.getText()) > 0){
                 statement.execute("DELETE FROM `rappid_cart`.`seller_product` WHERE (`product_id` = '"+productID+"');");
             }
             

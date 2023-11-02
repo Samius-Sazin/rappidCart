@@ -45,6 +45,70 @@ public class seller_dash_board extends javax.swing.JFrame {
                     break;
                 }
             }
+            
+            //for account status
+            if(this.read_result.getString("country").isEmpty() || this.read_result.getString("city").isEmpty() || this.read_result.getString("address").isEmpty() || this.read_result.getString("bank_acc_name").isEmpty() || (this.read_result.getInt("bank_acc_numb") == 0)){
+                showVarifyStatus_.setText("Not varified");
+            }
+            else{
+                showVarifyStatus_.setText("Varified Account");
+            }
+            
+            try{
+                //for overal rating
+                overal_rating_.setText("4.6/5");
+
+                //get access of seller product table
+                statement = connection.createStatement();
+                ResultSet read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+
+                //for Number of products, total products, total sold products, most sold item, lowest sold item,  
+                int numberOfProducts = 0, totalProducts = 0, totalSoldProduct = 0;
+                double totalProfit = 0, totalAmmountOfSale = 0;
+                int max = 0, min = Short.MAX_VALUE;
+
+                while(read_result_seller_products.next()){
+                    if(read_result.getString("user_name").compareTo(read_result_seller_products.getString("user_name")) == 0){
+                        numberOfProducts++;
+                        totalProducts += Integer.parseInt(read_result_seller_products.getString("ammounts"));
+                        totalSoldProduct += Integer.parseInt(read_result_seller_products.getString("sold"));
+
+                        totalAmmountOfSale += (Double.parseDouble(read_result_seller_products.getString("selling_price")) * Integer.parseInt(read_result_seller_products.getString("sold")));
+                        totalProfit += ((Double.parseDouble(read_result_seller_products.getString("selling_price")) - Double.parseDouble(read_result_seller_products.getString("buying_price"))) * Integer.parseInt(read_result_seller_products.getString("sold")));
+
+                        max = Math.max(max, Integer.parseInt(read_result_seller_products.getString("sold")));
+                        min = Math.min(Integer.parseInt(read_result_seller_products.getString("sold")), min);
+                    }
+                }
+                number_of_products_.setText("" + numberOfProducts);
+                total_products_.setText("" + totalProducts);
+                total_sold_products_.setText("" + totalSoldProduct);
+                
+                total_ammount_sale_.setText(String.format("%.2f", totalAmmountOfSale));
+                total_profit_.setText(String.format("%.2f", totalProfit));
+
+                //for most sold item
+                if(max != 0){
+                    read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+                    while(read_result_seller_products.next()){
+                        if(Integer.parseInt(read_result_seller_products.getString("sold")) == max){
+                            most_sold_item_.setText(read_result_seller_products.getString("product_name"));
+                            break;
+                        }
+                    }
+                } 
+                //for lowest sold item
+                read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+                while(read_result_seller_products.next()){
+                    if(Integer.parseInt(read_result_seller_products.getString("sold")) == min){
+                        lowesst_sold_item_.setText(read_result_seller_products.getString("product_name"));
+                        break;
+                    }
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            } 
         }
         catch (Exception e){
             e.printStackTrace();
@@ -56,7 +120,6 @@ public class seller_dash_board extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        closeProfgramButtono_ = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jDesktopPane2 = new javax.swing.JDesktopPane();
@@ -79,21 +142,31 @@ public class seller_dash_board extends javax.swing.JFrame {
         profile__ = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         products_ = new javax.swing.JComboBox<>();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        total_sold_products_ = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        total_profit_ = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        lowesst_sold_item_ = new javax.swing.JLabel();
+        showVarifyStatus_ = new javax.swing.JLabel();
+        most_sold_item_ = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        total_ammount_sale_ = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        number_of_products_ = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        overal_rating_ = new javax.swing.JLabel();
+        closeProfgramButtono_ = new javax.swing.JButton();
+        total_products_ = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        closeProfgramButtono_.setBackground(new java.awt.Color(240, 85, 35));
-        closeProfgramButtono_.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        closeProfgramButtono_.setForeground(new java.awt.Color(255, 255, 255));
-        closeProfgramButtono_.setText("X");
-        closeProfgramButtono_.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        closeProfgramButtono_.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        closeProfgramButtono_.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeProfgramButtono_ActionPerformed(evt);
-            }
-        });
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -291,7 +364,7 @@ public class seller_dash_board extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -344,7 +417,178 @@ public class seller_dash_board extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel7.setBackground(new java.awt.Color(240, 85, 35));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setText("Number of products");
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setText("Most sold item");
+
+        total_sold_products_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        total_sold_products_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        total_sold_products_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel22.setText("Lowest sold item");
+
+        total_profit_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        total_profit_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        total_profit_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setText("Total profit");
+
+        lowesst_sold_item_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lowesst_sold_item_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lowesst_sold_item_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        showVarifyStatus_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        showVarifyStatus_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        showVarifyStatus_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        most_sold_item_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        most_sold_item_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        most_sold_item_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel20.setText("Total ammount of sale");
+
+        total_ammount_sale_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        total_ammount_sale_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        total_ammount_sale_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setText("Account status");
+
+        number_of_products_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        number_of_products_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        number_of_products_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setText("Total sold products");
+
+        jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel23.setText("Overal rating");
+
+        overal_rating_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        overal_rating_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        overal_rating_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        closeProfgramButtono_.setBackground(new java.awt.Color(138, 48, 19));
+        closeProfgramButtono_.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        closeProfgramButtono_.setForeground(new java.awt.Color(255, 255, 255));
+        closeProfgramButtono_.setText("X");
+        closeProfgramButtono_.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        closeProfgramButtono_.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        closeProfgramButtono_.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeProfgramButtono_ActionPerformed(evt);
+            }
+        });
+
+        total_products_.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        total_products_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        total_products_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setText("Total products");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(closeProfgramButtono_, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(total_ammount_sale_, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(most_sold_item_, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lowesst_sold_item_, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(showVarifyStatus_, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(overal_rating_, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel7Layout.createSequentialGroup()
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(number_of_products_, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(total_profit_, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(total_sold_products_, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(total_products_, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))))
+                .addGap(18, 18, 18))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addComponent(closeProfgramButtono_)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(showVarifyStatus_, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(overal_rating_, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(number_of_products_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(total_products_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(total_sold_products_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(total_profit_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(total_ammount_sale_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(most_sold_item_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lowesst_sold_item_, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -354,18 +598,25 @@ public class seller_dash_board extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 529, Short.MAX_VALUE)
-                .addComponent(closeProfgramButtono_, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(closeProfgramButtono_)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
         setLocationRelativeTo(null);
@@ -374,61 +625,6 @@ public class seller_dash_board extends javax.swing.JFrame {
     private void closeProfgramButtono_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeProfgramButtono_ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_closeProfgramButtono_ActionPerformed
-
-    private void profile__ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile__ActionPerformed
-        try {
-            new seller_profile(this, this.read_result);
-            setVisible(false);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_profile__ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
-            
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        try {
-            
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        try {
-            
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton8ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        try {
-            
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     private void products_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_products_ActionPerformed
         if(products_.getSelectedItem().toString().compareTo("Add product") == 0){
@@ -441,9 +637,113 @@ public class seller_dash_board extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_products_ActionPerformed
 
-    
-    
+    private void profile__ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile__ActionPerformed
+        try {
+            new seller_profile(this, this.read_result);
+            setVisible(false);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_profile__ActionPerformed
 
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        try {
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        try {
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            //for overal rating
+            overal_rating_.setText("4.6/5");
+
+            //get access of seller product table
+            Statement statement = connection.createStatement();
+            ResultSet read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+
+            //for Number of products, total products, total sold products, most sold item, lowest sold item,  
+            int numberOfProducts = 0, totalProducts = 0, totalSoldProduct = 0;
+            double totalProfit = 0, totalAmmountOfSale = 0;
+            int max = 0, min = Short.MAX_VALUE;
+
+            while(read_result_seller_products.next()){
+                if(read_result.getString("user_name").compareTo(read_result_seller_products.getString("user_name")) == 0){
+                    numberOfProducts++;
+                    totalProducts += Integer.parseInt(read_result_seller_products.getString("ammounts"));
+                    totalSoldProduct += Integer.parseInt(read_result_seller_products.getString("sold"));
+
+                    totalAmmountOfSale += (Double.parseDouble(read_result_seller_products.getString("selling_price")) * Integer.parseInt(read_result_seller_products.getString("sold")));
+                    totalProfit += ((Double.parseDouble(read_result_seller_products.getString("selling_price")) - Double.parseDouble(read_result_seller_products.getString("buying_price"))) * Integer.parseInt(read_result_seller_products.getString("sold")));
+
+                    max = Math.max(max, Integer.parseInt(read_result_seller_products.getString("sold")));
+                    min = Math.min(Integer.parseInt(read_result_seller_products.getString("sold")), min);
+                }
+            }
+            number_of_products_.setText("" + numberOfProducts);
+            total_products_.setText("" + totalProducts);
+            total_sold_products_.setText("" + totalSoldProduct);
+            
+            total_ammount_sale_.setText(String.format("%.2f", totalAmmountOfSale));
+            total_profit_.setText(String.format("%.2f", totalProfit));
+
+            //for most sold item
+            if(max != 0){
+                read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+                while(read_result_seller_products.next()){
+                    if(Integer.parseInt(read_result_seller_products.getString("sold")) == max){
+                        most_sold_item_.setText(read_result_seller_products.getString("product_name"));
+                        break;
+                    }
+                }
+            } 
+            //for lowest sold item
+            read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
+            while(read_result_seller_products.next()){
+                if(Integer.parseInt(read_result_seller_products.getString("sold")) == min){
+                    lowesst_sold_item_.setText(read_result_seller_products.getString("product_name"));
+                    break;
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        } 
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    
+    
+//
 //    public static void main(String args[]) {
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
@@ -461,20 +761,39 @@ public class seller_dash_board extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JLabel lowesst_sold_item_;
+    private javax.swing.JLabel most_sold_item_;
+    private javax.swing.JLabel number_of_products_;
+    private javax.swing.JLabel overal_rating_;
     private javax.swing.JComboBox<String> products_;
     private javax.swing.JButton profile__;
+    private javax.swing.JLabel showVarifyStatus_;
+    private javax.swing.JLabel total_ammount_sale_;
+    private javax.swing.JLabel total_products_;
+    private javax.swing.JLabel total_profit_;
+    private javax.swing.JLabel total_sold_products_;
     private javax.swing.JLabel usersName_;
     private javax.swing.JLabel usersPhoto_;
     // End of variables declaration//GEN-END:variables
