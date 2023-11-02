@@ -282,7 +282,42 @@ public class database {
                     else if(client){
                         statement.execute("UPDATE `rappid_cart`.`login_signup_client` SET `password` = '"+newPassword+"' WHERE (`user_name` = '"+usernameOrGmail+"') or (`gmail` = '"+usernameOrGmail+"');");
                     }
-                    
+                    break;
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        
+        try
+        {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+
+            Statement statement = connection.createStatement();
+            
+            //data read
+            ResultSet read_result = null;
+            
+            if(seller){
+                read_result = statement.executeQuery("SELECT * FROM rappid_cart.seller_profile;");
+            }
+            else if(client){
+                read_result = statement.executeQuery("SELECT * FROM rappid_cart.client_profile;");
+            }
+            
+            if(read_result == null){
+                return;
+            }
+            
+            while (read_result.next()) {
+                if(read_result.getString("user_name").compareTo(usernameOrGmail)==0 || read_result.getString("gmail").compareTo(usernameOrGmail)==0){
+                    if(seller){
+                        statement.execute("UPDATE `rappid_cart`.`seller_profile` SET `password` = '"+newPassword+"' WHERE (`user_name` = '"+usernameOrGmail+"') or (`gmail` = '"+usernameOrGmail+"');");
+                    }
+                    else if(client){
+                        statement.execute("UPDATE `rappid_cart`.`client_profile` SET `password` = '"+newPassword+"' WHERE (`user_name` = '"+usernameOrGmail+"') or (`gmail` = '"+usernameOrGmail+"');");
+                    }
                     break;
                 }
             }

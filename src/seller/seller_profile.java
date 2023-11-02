@@ -665,6 +665,20 @@ public class seller_profile extends javax.swing.JFrame {
             catch (Exception e){
                 e.printStackTrace();
             }
+            
+            try{
+                String user_name = read_result.getString("user_name");
+                String gmail = read_result.getString("gmail");
+                
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+
+                Statement statement = connection.createStatement();
+
+                statement.execute("UPDATE `rappid_cart`.`login_signup_seller` SET `first_name` = '"+first_name_.getText()+"', `last_name` = '"+last_name_.getText()+"', `user_name` = '"+user_name_.getText()+"', `day` = '"+Integer.parseInt(day_.getText())+"', `month` = '"+Integer.parseInt(month_.getText())+"', `year` = '"+Integer.parseInt(year_.getText())+"', `gmail` = '"+gmail_.getText()+"' WHERE (`user_name` = '"+user_name+"') and (`gmail` = '"+gmail+"');");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         new successfull_window(this).update_seller_client_profile("Successful! Please login again");
