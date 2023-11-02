@@ -55,20 +55,22 @@ public class seller_dash_board extends javax.swing.JFrame {
             }
             
             try{
-                //for overal rating
-                overal_rating_.setText("4.6/5");
-
                 //get access of seller product table
                 statement = connection.createStatement();
                 ResultSet read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
 
-                //for Number of products, total products, total sold products, most sold item, lowest sold item,  
+                //for overal rating
+                overal_rating_.setText("4.6/5");
+                
+                //for Number of products, total products, total sold products,total_ammount_sale, total_profit,  max sold item, lowest sold item,  
                 int numberOfProducts = 0, totalProducts = 0, totalSoldProduct = 0;
-                double totalProfit = 0, totalAmmountOfSale = 0;
+                double totalProfit = 0, totalAmmountOfSale = 0, overalRating = 0;
                 int max = 0, min = Short.MAX_VALUE;
 
                 while(read_result_seller_products.next()){
                     if(read_result.getString("user_name").compareTo(read_result_seller_products.getString("user_name")) == 0){
+                        overalRating += Double.parseDouble(read_result_seller_products.getString("rating"));
+                        
                         numberOfProducts++;
                         totalProducts += Integer.parseInt(read_result_seller_products.getString("ammounts"));
                         totalSoldProduct += Integer.parseInt(read_result_seller_products.getString("sold"));
@@ -80,6 +82,8 @@ public class seller_dash_board extends javax.swing.JFrame {
                         min = Math.min(Integer.parseInt(read_result_seller_products.getString("sold")), min);
                     }
                 }
+                overal_rating_.setText(String.format("%.1f", overalRating/numberOfProducts));
+                
                 number_of_products_.setText("" + numberOfProducts);
                 total_products_.setText("" + totalProducts);
                 total_sold_products_.setText("" + totalSoldProduct);
@@ -685,20 +689,19 @@ public class seller_dash_board extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try{
-            //for overal rating
-            overal_rating_.setText("4.6/5");
-
             //get access of seller product table
             Statement statement = connection.createStatement();
             ResultSet read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
 
-            //for Number of products, total products, total sold products, most sold item, lowest sold item,  
+            //for Number of products, total products, total sold products,total_ammount_sale, total_profit,  max sold item, lowest sold item
             int numberOfProducts = 0, totalProducts = 0, totalSoldProduct = 0;
-            double totalProfit = 0, totalAmmountOfSale = 0;
+            double totalProfit = 0, totalAmmountOfSale = 0, overalRating = 0;
             int max = 0, min = Short.MAX_VALUE;
 
             while(read_result_seller_products.next()){
                 if(read_result.getString("user_name").compareTo(read_result_seller_products.getString("user_name")) == 0){
+                    overalRating += Double.parseDouble(read_result_seller_products.getString("rating"));
+                    
                     numberOfProducts++;
                     totalProducts += Integer.parseInt(read_result_seller_products.getString("ammounts"));
                     totalSoldProduct += Integer.parseInt(read_result_seller_products.getString("sold"));
@@ -710,6 +713,8 @@ public class seller_dash_board extends javax.swing.JFrame {
                     min = Math.min(Integer.parseInt(read_result_seller_products.getString("sold")), min);
                 }
             }
+            overal_rating_.setText(String.format("%.1f", overalRating/numberOfProducts));
+            
             number_of_products_.setText("" + numberOfProducts);
             total_products_.setText("" + totalProducts);
             total_sold_products_.setText("" + totalSoldProduct);

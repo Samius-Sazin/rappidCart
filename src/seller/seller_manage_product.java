@@ -47,6 +47,7 @@ public class seller_manage_product extends javax.swing.JFrame {
             
             ResultSet read_result_Product = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
             
+            double overalRating = 0;
             //for table
             DefaultTableModel table = (DefaultTableModel)table_.getModel();
             
@@ -66,10 +67,12 @@ public class seller_manage_product extends javax.swing.JFrame {
 
                     //show data on rtable from database
                     table.addRow(new Object[]{product_id, product_name, product_category, product_brandName, product_details, product_forWhome, product_buyPrice, product_sellPrice, product_ammount, Count});
-
+                    
+                    overalRating += Double.parseDouble(read_result_Product.getString("rating"));
                 }
             }
             
+            seller_rating_.setText(String.format("%.1f", overalRating/Count));
             total_products_.setText("" + Count);
         }
         catch (Exception e){
@@ -165,7 +168,6 @@ public class seller_manage_product extends javax.swing.JFrame {
 
         seller_rating_.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         seller_rating_.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        seller_rating_.setText("4.6/5");
         seller_rating_.setToolTipText("");
         seller_rating_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
