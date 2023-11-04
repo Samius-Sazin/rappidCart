@@ -16,7 +16,12 @@ public class successfull_window extends javax.swing.JFrame {
     private String userNameGmail;
     private Boolean update_seller_proile_check = false;
     private Boolean add_product_check = false;
+    private Boolean accounts_setting_pass_reset_check = false;
+    private Boolean delete_account_check = false;
+    
+    
     private JFrame seller_dash_board_frame;
+    private JFrame seller_accounts_settings_Frame;
     
     public successfull_window() {
         initComponents(); 
@@ -206,6 +211,24 @@ public class successfull_window extends javax.swing.JFrame {
             
             seller_dash_board_frame.setVisible(true);
         }
+        
+        if(accounts_setting_pass_reset_check){
+            setVisible(false);
+            dispose();
+            
+            parentFrame.setVisible(false);
+            dispose();
+            
+            seller_accounts_settings_Frame.setVisible(true);
+        }
+        
+        if(delete_account_check){
+            setVisible(false);
+            dispose();
+            
+            seller_accounts_settings_Frame.setVisible(false);
+            new login().setVisible(true);
+        }
     }//GEN-LAST:event_continuue_ActionPerformed
 
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -261,7 +284,45 @@ public class successfull_window extends javax.swing.JFrame {
             
             seller_dash_board_frame.setVisible(true);
         }
+        
+        if(accounts_setting_pass_reset_check){
+            setVisible(false);
+            dispose();
+            
+            parentFrame.setVisible(false);
+            dispose();
+            
+            seller_accounts_settings_Frame.setVisible(true);
+        }
+        
+        if(delete_account_check){
+            setVisible(false);
+            dispose();
+            
+            seller_accounts_settings_Frame.setVisible(false);
+            new login().setVisible(true);
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
+    
+    
+    ///call from unsuccessfull window class for delete acc
+    public void accounts_and_settings_account_delete(String show, JFrame account_seting_frame){
+        this.seller_accounts_settings_Frame = account_seting_frame;
+        delete_account_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
+    
+    
+    ///call from password_reset class
+    public void accounts_and_settings_password_reset(String show, JFrame seller_accounts_settings_Frame){
+        accounts_setting_pass_reset_check = true;
+        this.seller_accounts_settings_Frame = seller_accounts_settings_Frame;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
+    
+    
     
     //call from seller_add_product calss, call from seller_manage_product class (save changes method)
     public void add_seller_product(String show, JFrame seller_dashboardFrame){

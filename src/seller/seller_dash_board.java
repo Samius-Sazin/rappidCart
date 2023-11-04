@@ -82,7 +82,7 @@ public class seller_dash_board extends javax.swing.JFrame {
                         min = Math.min(Integer.parseInt(read_result_seller_products.getString("sold")), min);
                     }
                 }
-                overal_rating_.setText(String.format("%.1f", overalRating/numberOfProducts));
+                overal_rating_.setText(String.format("%.1f", overalRating/numberOfProducts) + "/5");
                 
                 number_of_products_.setText("" + numberOfProducts);
                 total_products_.setText("" + totalProducts);
@@ -134,7 +134,7 @@ public class seller_dash_board extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        accounts_settings_ = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -269,14 +269,14 @@ public class seller_dash_board extends javax.swing.JFrame {
             }
         });
 
-        jButton9.setBackground(new java.awt.Color(240, 85, 35));
-        jButton9.setText("Accounts & Settings");
-        jButton9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton9.setPreferredSize(new java.awt.Dimension(140, 23));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        accounts_settings_.setBackground(new java.awt.Color(240, 85, 35));
+        accounts_settings_.setText("Accounts & Settings");
+        accounts_settings_.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        accounts_settings_.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        accounts_settings_.setPreferredSize(new java.awt.Dimension(140, 23));
+        accounts_settings_.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                accounts_settings_ActionPerformed(evt);
             }
         });
 
@@ -356,7 +356,7 @@ public class seller_dash_board extends javax.swing.JFrame {
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(accounts_settings_, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(products_, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -387,7 +387,7 @@ public class seller_dash_board extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accounts_settings_, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -546,9 +546,8 @@ public class seller_dash_board extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(total_profit_, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(total_sold_products_, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(total_products_, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))))
+                                .addComponent(total_sold_products_, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(total_products_, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))))
                 .addGap(18, 18, 18))
         );
         jPanel7Layout.setVerticalGroup(
@@ -642,49 +641,27 @@ public class seller_dash_board extends javax.swing.JFrame {
     }//GEN-LAST:event_products_ActionPerformed
 
     private void profile__ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile__ActionPerformed
-        try {
-            new seller_profile(this, this.read_result);
-            setVisible(false);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        new seller_profile(this, this.read_result);
+        setVisible(false);
     }//GEN-LAST:event_profile__ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        setVisible(false);
+        new helpLine(this).setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void accounts_settings_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accounts_settings_ActionPerformed
+           
+        new accounts_and_settings(this, this.read_result).setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_accounts_settings_ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+      
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -758,12 +735,12 @@ public class seller_dash_board extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton accounts_settings_;
     private javax.swing.JButton closeProfgramButtono_;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;

@@ -265,7 +265,7 @@
                                       <Component id="jButton3" max="32767" attributes="0"/>
                                       <Component id="jButton4" alignment="1" max="32767" attributes="0"/>
                                       <Component id="jButton8" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jButton9" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="accounts_settings_" alignment="1" max="32767" attributes="0"/>
                                       <Component id="jButton7" alignment="1" min="-2" pref="140" max="-2" attributes="0"/>
                                       <Component id="products_" alignment="0" max="32767" attributes="0"/>
                                   </Group>
@@ -306,7 +306,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabel5" max="32767" attributes="0"/>
-                              <Component id="jButton9" min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="accounts_settings_" min="-2" pref="33" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -361,7 +361,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton9">
+                <Component class="javax.swing.JButton" name="accounts_settings_">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="23" green="55" red="f0" type="rgb"/>
@@ -380,7 +380,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="accounts_settings_ActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton8">

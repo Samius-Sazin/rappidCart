@@ -1,24 +1,28 @@
 package pop_up;
 
-import javax.swing.JFrame;
+import java.sql.*;
+import javax.swing.*;
 import rappidcart.signup;
 import rappidcart.login;
 
 public class unsuccessfull_window extends javax.swing.JFrame {
 
-    Boolean signUp_check = false;
-    Boolean login_check = false;
-    Boolean month_day_check = false;
-    Boolean year_check = false;
-    Boolean proceed_check = false;
-    Boolean forgotPassword_check = false;
-    Boolean retypeNewPass_check = false;
-    Boolean signUp_similar_UName_GMAIL_check = false;
-    Boolean valid_gmail_password_check = false;
-    Boolean signUp_week_password_check = false;
-    Boolean update_seller_profile_check = false;
+    private Boolean signUp_check = false;
+    private Boolean login_check = false;
+    private Boolean month_day_check = false;
+    private Boolean year_check = false;
+    private Boolean proceed_check = false;
+    private Boolean forgotPassword_check = false;
+    private Boolean retypeNewPass_check = false;
+    private Boolean signUp_similar_UName_GMAIL_check = false;
+    private Boolean valid_gmail_password_check = false;
+    private Boolean signUp_week_password_check = false;
+    private Boolean update_seller_profile_check = false;
+    private Boolean delete_account_check = false;
     
     public JFrame parentFrame;
+    
+    private ResultSet read_result;
     
     
     public unsuccessfull_window() {
@@ -249,6 +253,33 @@ public class unsuccessfull_window extends javax.swing.JFrame {
             setVisible(false);
             dispose();
         }
+        
+        if(delete_account_check){
+            setVisible(false);
+            dispose();
+            
+            try{
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+                Statement statement = connection.createStatement();
+                
+                if(Integer.parseInt(read_result.getString("client")) == 1){
+                    statement.execute("DELETE FROM `rappid_cart`.`login_signup_client` WHERE (`user_name` = '"+read_result.getString("user_name")+"');");
+//                    statement.execute("DELETE FROM `rappid_cart`.`seller_product` WHERE (`user_name` = '"+read_result.getString("user_name")+"');");
+                    statement.execute("DELETE FROM `rappid_cart`.`client_profile` WHERE (`user_name` = '"+read_result.getString("user_name")+"');");
+                }
+                else{
+                    statement.execute("DELETE FROM `rappid_cart`.`login_signup_seller` WHERE (`user_name` = '"+read_result.getString("user_name")+"');");
+                    statement.execute("DELETE FROM `rappid_cart`.`seller_product` WHERE (`user_name` = '"+read_result.getString("user_name")+"');");
+                    statement.execute("DELETE FROM `rappid_cart`.`seller_profile` WHERE (`user_name` = '"+read_result.getString("user_name")+"');");
+                }
+                
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            
+            new successfull_window().accounts_and_settings_account_delete("Account deleted successfully!", parentFrame);
+        }
     }//GEN-LAST:event_continue_ActionPerformed
  
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -334,8 +365,21 @@ public class unsuccessfull_window extends javax.swing.JFrame {
             setVisible(false);
             dispose();
         }
+        
+        if(delete_account_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
 
+    //call from accounts and settings class for delete account
+    public void accounts_and_settings_account_delete(String show, ResultSet read_result){
+        this.read_result = read_result;
+        delete_account_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
+    
     
     //called from seller package, seller_profile class
     public void cancel_update_seller_client_profile(String show){

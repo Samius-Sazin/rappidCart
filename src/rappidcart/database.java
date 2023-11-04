@@ -22,13 +22,13 @@ public class database {
             //set Data to database for seller
             if(seller){
                 statement.execute("INSERT INTO `rappid_cart`.`login_signup_seller` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
-                statement.execute("INSERT INTO `rappid_cart`.`seller_profile` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`, `country`, `city`, `address`, `bank_acc_name`, `bank_acc_numb`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"', '', '', '', '', '0');");
+                statement.execute("INSERT INTO `rappid_cart`.`seller_profile` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`, `country`, `city`, `address`, `bank_acc_name`, `bank_acc_numb`, `client`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"', '', '', '', '', '0', '0');");
             }
             
             //set Data to database for Client
             else if(client){
                 statement.execute("INSERT INTO `rappid_cart`.`login_signup_client` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
-                //statement.execute("INSERT INTO `rappid_cart`.`client_profile` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"');");
+                statement.execute("INSERT INTO `rappid_cart`.`client_profile` (`serial_number`, `first_name`, `last_name`, `user_name`, `day`, `month`, `year`, `gmail`, `password`, `country`, `city`, `address`, `client`) VALUES ('"+serial_num+"', '"+first_name+"', '"+last_name+"', '"+user_name+"', '"+day+"', '"+month+"', '"+year+"', '"+gmail+"', '"+password+"', '', '', '', '1');");
             }
         }
         catch (Exception e){
@@ -117,7 +117,6 @@ public class database {
             }
             
             return false;
-            
         }
         catch (Exception e){
             e.printStackTrace();

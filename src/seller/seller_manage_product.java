@@ -72,7 +72,7 @@ public class seller_manage_product extends javax.swing.JFrame {
                 }
             }
             
-            seller_rating_.setText(String.format("%.1f", overalRating/Count));
+            seller_rating_.setText(String.format("%.1f", overalRating/Count) + "/5");
             total_products_.setText("" + Count);
         }
         catch (Exception e){
