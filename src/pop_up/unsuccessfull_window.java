@@ -19,6 +19,7 @@ public class unsuccessfull_window extends javax.swing.JFrame {
     private Boolean signUp_week_password_check = false;
     private Boolean update_seller_profile_check = false;
     private Boolean delete_account_check = false;
+    private Boolean random_show_check = false;
     
     public JFrame parentFrame;
     
@@ -280,6 +281,11 @@ public class unsuccessfull_window extends javax.swing.JFrame {
             
             new successfull_window().accounts_and_settings_account_delete("Account deleted successfully!", parentFrame);
         }
+        
+        if(random_show_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_continue_ActionPerformed
  
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -370,8 +376,22 @@ public class unsuccessfull_window extends javax.swing.JFrame {
             setVisible(false);
             dispose();
         }
+        
+        if(random_show_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
 
+    
+    //call from clienetdashboard class, for discard order
+    public void random_alert_show(String show){
+        random_show_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
+    
+    
     //call from accounts and settings class for delete account
     public void accounts_and_settings_account_delete(String show, ResultSet read_result){
         this.read_result = read_result;

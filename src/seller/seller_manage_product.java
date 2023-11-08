@@ -413,7 +413,7 @@ public class seller_manage_product extends javax.swing.JFrame {
             if(serial_number_.getText().compareTo("")!=0 && Integer.parseInt(serial_number_.getText()) > 0){
                 statement.execute("DELETE FROM `rappid_cart`.`seller_product` WHERE (`product_id` = '"+productID+"');");
             }
-            
+            //get data from table
             else{
                 DefaultTableModel table = (DefaultTableModel)table_.getModel();
             

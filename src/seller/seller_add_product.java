@@ -456,9 +456,10 @@ public class seller_add_product extends javax.swing.JFrame {
             
             ResultSet read_result_addProduct = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
             
-            int getProductID = 1;
+            int getProductID = 1, count = 1;
             while(read_result_addProduct.next()){
                 getProductID = Math.max(Integer.parseInt(read_result_addProduct.getString("product_id")), getProductID);
+                count++;
             }getProductID++;
             
             String productID = setNullValue;
@@ -477,7 +478,7 @@ public class seller_add_product extends javax.swing.JFrame {
             }
             
             
-            statement.execute("INSERT INTO `rappid_cart`.`seller_product` (`serial_number`, `user_name`, `product_id`, `product_name`, `category`, `brand_name`, `details`, `for_whome`, `buying_price`, `selling_price`, `ammounts`, `sold`, `rating`) VALUES ('"+getProductID+"', '"+sellerUserName+"', '"+productID+"', '"+product_name+"', '"+product_category+"', '"+product_brandName+"', '"+product_details+"', '"+product_forWhome+"', '"+product_buyPrice+"', '"+product_sellPrice+"', '"+product_ammount+"', '0', '0');");
+            statement.execute("INSERT INTO `rappid_cart`.`seller_product` (`serial_number`, `user_name`, `product_id`, `product_name`, `category`, `brand_name`, `details`, `for_whome`, `buying_price`, `selling_price`, `ammounts`, `sold`, `rating`) VALUES ('"+count+"', '"+sellerUserName+"', '"+productID+"', '"+product_name+"', '"+product_category+"', '"+product_brandName+"', '"+product_details+"', '"+product_forWhome+"', '"+product_buyPrice+"', '"+product_sellPrice+"', '"+product_ammount+"', '0', '0');");
         }
         catch (Exception e){
             e.printStackTrace();

@@ -18,10 +18,13 @@ public class successfull_window extends javax.swing.JFrame {
     private Boolean add_product_check = false;
     private Boolean accounts_setting_pass_reset_check = false;
     private Boolean delete_account_check = false;
+    private Boolean confirm_order_check = false;
+     private Boolean random_show_check = false;
     
     
     private JFrame seller_dash_board_frame;
     private JFrame seller_accounts_settings_Frame;
+    private JFrame client_dashBoardFrame;
     
     public successfull_window() {
         initComponents(); 
@@ -229,6 +232,21 @@ public class successfull_window extends javax.swing.JFrame {
             seller_accounts_settings_Frame.setVisible(false);
             new login().setVisible(true);
         }
+        
+        if(confirm_order_check){
+            setVisible(false);
+            dispose();
+            
+            client_dashBoardFrame.setVisible(false);
+            dispose();
+            
+            new client_dash_board(userNameGmail).setVisible(true);
+        }
+        
+        if(random_show_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_continuue_ActionPerformed
 
     private void cross_button_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cross_button_ActionPerformed
@@ -302,7 +320,39 @@ public class successfull_window extends javax.swing.JFrame {
             seller_accounts_settings_Frame.setVisible(false);
             new login().setVisible(true);
         }
+        
+        if(confirm_order_check){
+            setVisible(false);
+            dispose();
+            
+            client_dashBoardFrame.setVisible(false);
+            dispose();
+            
+            new client_dash_board(userNameGmail).setVisible(true);
+        }
+        
+        if(random_show_check){
+            setVisible(false);
+            dispose();
+        }
     }//GEN-LAST:event_cross_button_ActionPerformed
+    
+    //call from clienetdashboard class, for add to cart successful
+    public void random_alert_show(String show){
+        random_show_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
+    
+    
+    //call from client dashboard class for confirm order
+    public void confirm_order(String show, JFrame client_dashBoardFrame, String userNameGmail){
+        this.client_dashBoardFrame = client_dashBoardFrame;
+        this.userNameGmail = userNameGmail;
+        confirm_order_check = true;
+        alert_box_.setText(alert_box_.getText() + show);
+        setVisible(true);
+    }
     
     
     ///call from unsuccessfull window class for delete acc
