@@ -902,7 +902,7 @@ public class client_dash_board extends javax.swing.JFrame {
 
     private void profile__1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile__1ActionPerformed
         setVisible(false);
-        new client_cart(userNameGmail).setVisible(true);
+        new client_cart(userNameGmail, read_result).setVisible(true);
     }//GEN-LAST:event_profile__1ActionPerformed
 
     private void profile__ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile__ActionPerformed
@@ -951,7 +951,7 @@ public class client_dash_board extends javax.swing.JFrame {
                         new unsuccessfull_window().random_alert_show("Not enough item!");
                         check = true;
                     }
-                    if(Integer.parseInt(read_result_Product2.getString("product_id")) == Integer.parseInt(product_id_3_.getText())){
+                    if(Integer.parseInt(read_result_Product2.getString("product_id")) == Integer.parseInt(product_id_1_.getText())){
                         check_valid_item = true;
                     }
                 }
@@ -1162,11 +1162,11 @@ public class client_dash_board extends javax.swing.JFrame {
                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
                 Statement statement = connection.createStatement();
                 ResultSet read_result_cart = statement.executeQuery("SELECT * FROM rappid_cart.client_cart;");
-
-                int c = 1;
-                while(read_result_cart.next()){
-                    c++;
-                }
+//
+//                int c = 1;
+//                while(read_result_cart.next()){
+//                    c++;
+//                }
                 
                 //get data from table
                 DefaultTableModel table = (DefaultTableModel)table_.getModel();
@@ -1198,7 +1198,7 @@ public class client_dash_board extends javax.swing.JFrame {
                             statement.execute("UPDATE `rappid_cart`.`client_cart` SET `selected` = '"+(AMMOUNT + Integer.parseInt(ammount_3_.getText()))+"' WHERE (`serial_number` = '"+sn+"');");
                         }
                         else{
-                            statement.execute("INSERT INTO `rappid_cart`.`client_cart` (`serial_number`, `client_name`, `product_id`, `product_name`, `brand`, `details`, `selected`, `price`) VALUES ('"+c+"', '"+read_result.getString("user_name")+"', '"+Integer.parseInt(product_id_3_.getText())+"', '"+("" + newData[1])+"', '"+("" + newData[2])+"', '"+("" + newData[3])+"', '"+Integer.parseInt(ammount_3_.getText())+"', '"+(Double.parseDouble("" + newData[5]))+"');");
+                            statement.execute("INSERT INTO `rappid_cart`.`client_cart` (`client_name`, `product_id`, `product_name`, `brand`, `details`, `selected`, `price`) VALUES ('"+read_result.getString("user_name")+"', '"+Integer.parseInt(product_id_3_.getText())+"', '"+("" + newData[1])+"', '"+("" + newData[2])+"', '"+("" + newData[3])+"', '"+Integer.parseInt(ammount_3_.getText())+"', '"+(Double.parseDouble("" + newData[5]))+"');");
                         }
                         break;
                     }
@@ -1208,6 +1208,8 @@ public class client_dash_board extends javax.swing.JFrame {
                 e.printStackTrace();
             }
             new successfull_window().random_alert_show("Item added to cart");
+            product_id_3_.setText("0");
+            ammount_3_.setText("0");
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 

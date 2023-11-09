@@ -19,7 +19,7 @@ public class successfull_window extends javax.swing.JFrame {
     private Boolean accounts_setting_pass_reset_check = false;
     private Boolean delete_account_check = false;
     private Boolean confirm_order_check = false;
-     private Boolean random_show_check = false;
+    private Boolean random_show_check = false;
     
     
     private JFrame seller_dash_board_frame;

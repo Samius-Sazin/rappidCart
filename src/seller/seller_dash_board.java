@@ -58,9 +58,6 @@ public class seller_dash_board extends javax.swing.JFrame {
                 //get access of seller product table
                 statement = connection.createStatement();
                 ResultSet read_result_seller_products = statement.executeQuery("SELECT * FROM rappid_cart.seller_product;");
-
-                //for overal rating
-                overal_rating_.setText("4.6/5");
                 
                 //for Number of products, total products, total sold products,total_ammount_sale, total_profit,  max sold item, lowest sold item,  
                 int numberOfProducts = 0, totalProducts = 0, totalSoldProduct = 0;
@@ -682,7 +679,7 @@ public class seller_dash_board extends javax.swing.JFrame {
                     min = Math.min(Integer.parseInt(read_result_seller_products.getString("sold")), min);
                 }
             }
-            overal_rating_.setText(String.format("%.1f", overalRating/numberOfProducts));
+            overal_rating_.setText(String.format("%.1f", overalRating/numberOfProducts) + "/5");
             
             number_of_products_.setText("" + numberOfProducts);
             total_products_.setText("" + totalProducts);
