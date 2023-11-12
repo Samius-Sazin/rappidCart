@@ -577,6 +577,12 @@ public class client_cart extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
+            String CLIENT_NAME = "";
+            String PRODUCT_NAME = "";
+            int PRODUCT_ID = 0, ITEM_BOUGHT = 0;
+            double PRICE = 0.0;
+            
+            
             //edit seller product database table
             try{
                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
@@ -600,9 +606,16 @@ public class client_cart extends javax.swing.JFrame {
                 } else if(getProductID < 100000){
                     productID = "00" + getProductID;
                 }
-
+                
+                CLIENT_NAME = read_result.getString("user_name");
+                
                 while(read_result_seller_product2.next()){
                     if(read_result_seller_product2.getString("product_id").compareTo(productID) == 0){
+                        PRODUCT_NAME = read_result_seller_product2.getString("product_name");
+                        PRODUCT_ID = Integer.parseInt(read_result_seller_product2.getString("product_id"));
+                        ITEM_BOUGHT = Integer.parseInt(ammount_1_.getText());
+                        PRICE = Double.parseDouble(String.format("%.2f", read_result_seller_product2.getDouble("selling_price") * Integer.parseInt(ammount_1_.getText())));
+                        
                         new_ammount = read_result_seller_product2.getInt("ammounts") - Integer.parseInt(ammount_1_.getText());
                         new_sold = read_result_seller_product2.getInt("sold") + Integer.parseInt(ammount_1_.getText());
                         break;
@@ -613,45 +626,30 @@ public class client_cart extends javax.swing.JFrame {
             catch(Exception e){
                 e.printStackTrace();
             }
+            
+            //edit ordered product database table
+            try{
+                Connection connection2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+                Statement statement2 = connection2.createStatement();
+                ResultSet read_result_order = statement2.executeQuery("SELECT * FROM rappid_cart.ordered_product;");
+
+                statement2.execute("INSERT INTO `rappid_cart`.`ordered_product` (`client_name`, `product_id`, `name`, `item_bought`, `price`, `rating`, `write_something`) VALUES ('"+CLIENT_NAME+"', '"+PRODUCT_ID+"', '"+PRODUCT_NAME+"', '"+ITEM_BOUGHT+"', '"+PRICE+"', '0', '');");
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 
             new successfull_window().confirm_order("Your order has been placed!", this, userNameGmail);
         }
     }//GEN-LAST:event_confirm_3_ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(client_cart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(client_cart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(client_cart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(client_cart.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new client_cart().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new client_cart().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ammount_1_;

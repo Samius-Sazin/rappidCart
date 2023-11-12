@@ -1,5 +1,6 @@
 package seller;
 
+import client.orders_and_review;
 import rappidcart.database;
 import java.sql.*;
 import java.util.logging.Level;
@@ -644,13 +645,14 @@ public class seller_dash_board extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void accounts_settings_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accounts_settings_ActionPerformed
-           
         new accounts_and_settings(this, this.read_result).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_accounts_settings_ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      
+        new order_and_review_seller(read_result, userNameGmail).setVisible(true);
+        setVisible(false);
+        dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

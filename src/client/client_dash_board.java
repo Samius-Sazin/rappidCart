@@ -695,8 +695,7 @@ public class client_dash_board extends javax.swing.JFrame {
                             .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel2.setBackground(new java.awt.Color(240, 85, 35));
@@ -921,7 +920,9 @@ public class client_dash_board extends javax.swing.JFrame {
     }//GEN-LAST:event_accounts_settings_ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-
+        setVisible(false);
+        dispose();
+        new orders_and_review(read_result, userNameGmail).setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void home_ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_ActionPerformed
@@ -1091,6 +1092,10 @@ public class client_dash_board extends javax.swing.JFrame {
                             break;
                         }
                     }
+                    String CLIENT_NAME = read_result.getString("user_name");
+                    String PRODUCT_NAME = read_result_Product2.getString("product_name");
+                    double PRODUCT_PRICE = Double.parseDouble(String.format("%.2f", arr_order[i] * read_result_Product2.getDouble("selling_price")));
+                    
                     if(arr_order[i] > 0){
                         int getProductID = i;
                         String productID = "";
@@ -1109,6 +1114,17 @@ public class client_dash_board extends javax.swing.JFrame {
                         }
 
                         statement.execute("UPDATE `rappid_cart`.`seller_product` SET `ammounts` = '"+ammount+"', `sold` = '"+sold+"' WHERE (`product_id` = '"+productID+"');");
+                        
+                        try{
+                            Connection connection2 = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
+                            Statement statement2 = connection2.createStatement();
+                            ResultSet read_result_order = statement2.executeQuery("SELECT * FROM rappid_cart.ordered_product;");
+                        
+                            statement2.execute("INSERT INTO `rappid_cart`.`ordered_product` (`client_name`, `product_id`, `name`, `item_bought`, `price`, `rating`, `write_something`) VALUES ('"+CLIENT_NAME+"', '"+i+"', '"+PRODUCT_NAME+"', '"+arr_order[i]+"', '"+PRODUCT_PRICE+"', '0', '');");
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
