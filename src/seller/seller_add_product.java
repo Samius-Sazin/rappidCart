@@ -478,7 +478,7 @@ public class seller_add_product extends javax.swing.JFrame {
             }
             
             
-            statement.execute("INSERT INTO `rappid_cart`.`seller_product` (`serial_number`, `user_name`, `product_id`, `product_name`, `category`, `brand_name`, `details`, `for_whome`, `buying_price`, `selling_price`, `ammounts`, `sold`, `rating`) VALUES ('"+count+"', '"+sellerUserName+"', '"+productID+"', '"+product_name+"', '"+product_category+"', '"+product_brandName+"', '"+product_details+"', '"+product_forWhome+"', '"+product_buyPrice+"', '"+product_sellPrice+"', '"+product_ammount+"', '0', '0');");
+            statement.execute("INSERT INTO `rappid_cart`.`seller_product` (`serial_number`, `user_name`, `product_id`, `product_name`, `category`, `brand_name`, `details`, `for_whome`, `buying_price`, `selling_price`, `ammounts`, `sold`, `rating`) VALUES ('"+count+"', '"+sellerUserName+"', '"+productID+"', '"+product_name+"', '"+product_category+"', '"+product_brandName+"', '"+product_details+"', '"+product_forWhome+"', '"+product_buyPrice+"', '"+product_sellPrice+"', '"+product_ammount+"', '0', '5');");
         }
         catch (Exception e){
             e.printStackTrace();

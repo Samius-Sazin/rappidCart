@@ -156,8 +156,6 @@ public class client_dash_board extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         summery_1_ = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        summery_2_ = new javax.swing.JTextArea();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
@@ -743,13 +741,6 @@ public class client_dash_board extends javax.swing.JFrame {
         summery_1_.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane2.setViewportView(summery_1_);
 
-        summery_2_.setColumns(20);
-        summery_2_.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        summery_2_.setLineWrap(true);
-        summery_2_.setRows(5);
-        summery_2_.setBorder(null);
-        jScrollPane3.setViewportView(summery_2_);
-
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Item Name");
 
@@ -761,17 +752,15 @@ public class client_dash_board extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addGap(60, 60, 60))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -781,9 +770,7 @@ public class client_dash_board extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -982,8 +969,7 @@ public class client_dash_board extends javax.swing.JFrame {
 
                         totalProduct += Integer.parseInt(ammount_1_.getText());
 
-                        summery_1_.setText("+ " + read_result_Product2.getString("product_name"));
-                        summery_2_.setText("" + read_result_Product2.getDouble("selling_price") + " * " + ammount_1_.getText() + " = " + String.format("%.2f", perSelectPrice));
+                        summery_1_.setText(summery_1_.getText() + ("+ " + read_result_Product2.getString("product_name") + "\t                      " + read_result_Product2.getDouble("selling_price") + " * " + ammount_1_.getText() + " = " + String.format("%.2f", perSelectPrice) + "\n"));
 
                         total_products_.setText("" + totalProduct);
                         total_cost_.setText("" + totalPrice);
@@ -1015,7 +1001,8 @@ public class client_dash_board extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(arr_order[Integer.parseInt(product_id_2_.getText())] > Integer.parseInt(ammount_2_.getText())){
+        if(arr_order[Integer.parseInt(product_id_2_.getText())] >= Integer.parseInt(ammount_2_.getText())){
+            arr_order[Integer.parseInt(product_id_2_.getText())] = arr_order[Integer.parseInt(product_id_2_.getText())] - Integer.parseInt(ammount_2_.getText());
             try{
                 Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/rappid_cart", "root", "sami12334");
                 Statement statement = connection.createStatement();
@@ -1029,8 +1016,7 @@ public class client_dash_board extends javax.swing.JFrame {
 
                         totalProduct -= Integer.parseInt(ammount_2_.getText());
 
-                        summery_1_.setText("- " + read_result_Product2.getString("product_name"));
-                        summery_2_.setText("-(" + read_result_Product2.getDouble("selling_price") + " * " + ammount_2_.getText() + ") = -" + String.format("%.2f", perSelectPrice));
+                        summery_1_.setText(summery_1_.getText() + ("-  " + read_result_Product2.getString("product_name") + "\t                      -(" + read_result_Product2.getDouble("selling_price") + " * " + ammount_2_.getText() + ") = -" + String.format("%.2f", perSelectPrice) + "\n"));
 
                         total_products_.setText("" + totalProduct);
                         total_cost_.setText("" + totalPrice);
@@ -1279,14 +1265,12 @@ public class client_dash_board extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField product_id_1_;
     private javax.swing.JTextField product_id_2_;
     private javax.swing.JTextField product_id_3_;
     private javax.swing.JButton profile__;
     private javax.swing.JButton profile__1;
     private javax.swing.JTextArea summery_1_;
-    private javax.swing.JTextArea summery_2_;
     private javax.swing.JTable table_;
     private javax.swing.JLabel total_cost_;
     private javax.swing.JLabel total_products_;
