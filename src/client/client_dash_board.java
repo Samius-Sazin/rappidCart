@@ -1051,6 +1051,8 @@ public class client_dash_board extends javax.swing.JFrame {
         
         total_cost_.setText("0.00");
         total_products_.setText("0");
+
+        summery_1_.setText("");
         
         new unsuccessfull_window().random_alert_show("Order Cancelled");
     }//GEN-LAST:event_jButton11ActionPerformed
